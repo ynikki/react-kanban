@@ -11,6 +11,15 @@ module.exports = {
       title: {
         type: Sequelize.TEXT
       },
+      description: {
+        type: Sequelize.TEXT
+      },
+      createdBy: {
+        type: Sequelize.STRING
+      },
+      assignedTo: {
+        type: Sequelize.STRING
+      },
       priority: {
         type: Sequelize.INTEGER
       },

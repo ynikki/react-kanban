@@ -12,12 +12,12 @@ app.set('port', (process.env.PORT || 8080));
 app.set('views', path.resolve(__dirname, 'views'));
 app.set('view engine', 'pug');
 
-app.use('/', express.static(path.join(__dirname, 'public')));
+app.use('/', express.static(path.join(__dirname, 'views/index')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extneded: false }));
 
 app.get('/', function (req, res) {
- 
+ res.render('index');
 });
 
 app.get('/task/new', function (req, res) {
