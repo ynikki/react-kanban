@@ -8,7 +8,6 @@ const app = express();
 const pug = require('pug');
 const methodOverride = require('method-override');
 
-
 app.set('port', (process.env.PORT || 8080));
 app.set('views', path.resolve(__dirname, 'views'));
 app.set('view engine', 'pug');
