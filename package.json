@@ -1,0 +1,32 @@
+{
+  "name": "react-kanban",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "express-session": "^1.14.0",
+    "pg": "^6.1.0",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^3.24.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-install": "^0.6.0",
+    "gulp-sass": "^2.3.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ynikki/react-kanban.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ynikki/react-kanban/issues"
+  },
+  "homepage": "https://github.com/ynikki/react-kanban#readme"
+}
