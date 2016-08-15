@@ -1,11 +1,11 @@
-var db = require('./models');
+const db = require('./models');
 
-var fs = require('fs');
-var path = require('path');
-var express = require('express');
-var bodyParser = require('body-parser');
-var app = express();
-var pug = require('pug');
+const fs = require('fs');
+const path = require('path');
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
+const pug = require('pug');
 
 
 app.set('port', (process.env.PORT || 8080));
@@ -16,6 +16,17 @@ app.use('/', express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extneded: false }));
 
+app.get('/', function (req, res) {
+ 
+});
+
+app.get('/task/new', function (req, res) {
+
+});
+
+app.get('/task/:id', function (req, res) {
+
+});
 
 app.listen(app.get('port'), function () {
   db.sequelize.sync();
