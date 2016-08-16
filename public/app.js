@@ -1,9 +1,32 @@
 const TaskForm = React.createClass({
   render: function () {
     return (
-      <div className="taskForm">
-        HELLO
-      </div>
+      <form className="taskForm" onSubmit= { this.handleSubmit }>
+        <input
+          type="text"
+          placeholder="Title"
+        />
+        <input
+          type="text"
+          placeholder="Description"
+        />
+        <input
+          type="text"
+          placeholder="Created By"
+        />
+        <input
+          type="text"
+          placeholder="Assigned To"
+        />
+        <input
+          type="text"
+          placeholder="Created By"
+        />
+        <input
+          type="submit"
+          value="Post"
+        />
+      </form>
     );
   }
 });
