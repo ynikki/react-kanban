@@ -16,10 +16,6 @@ const Task = React.createClass({
           Title Goes Here
         </h2>
       </div>
-      <div classname="description">
-        <h2 className="describe">
-        </h2>
-      </div>
     );
   }
 });
@@ -38,14 +34,14 @@ const TaskBox = React.createClass({
   render: function() {
     return (
       <div className="taskBox">
-        <TaskList />
         <TaskForm />
+        <TaskList />
       </div>
     );
   }
 });
 
 ReactDOM.render(
-  <TaskBox url="/">,
+  <TaskBox url="/task/new" />,
   document.getElementById('app')
 );
