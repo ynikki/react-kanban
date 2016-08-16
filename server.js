@@ -25,15 +25,28 @@ app.use(methodOverride(function(req, res){
 }));
 
 app.get('/', function (req, res) {
- res.render('index');
+  db.Task.findAll()
+    .then(function (tasks) {
+      return res.render('index', {Task: tasks});
+    });
 });
 
 app.get('/task/new', function (req, res) {
-
+  res.render('task');
 });
 
 app.get('/task/:id', function (req, res) {
-
+  db.Task.findOne({
+    where: {
+      id: req.params.id
+    }, include: [{
+      model: db.Tasks,
+      required: true
+    }]
+  })
+    .then(function (task) {
+      res.render('task', { task: task });
+    });
 });
 
 app.listen(app.get('port'), function () {
