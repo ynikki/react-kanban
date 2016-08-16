@@ -1,9 +1,9 @@
 const TaskForm = React.createClass({
   render: function () {
     return (
-      <form className="taskForm">
+      <div className="taskForm">
         HELLO
-      </form>
+      </div>
     );
   }
 });
@@ -18,6 +18,7 @@ const Task = React.createClass({
       </div>
       <div classname="description">
         <h2 className="describe">
+        </h2>
       </div>
     );
   }
@@ -25,7 +26,11 @@ const Task = React.createClass({
 
 const TaskList = React.createClass({
   render: function () {
-
+    return (
+      <div className="taskList">
+      THE LIST
+      </div>
+    );
   }
 });
 
