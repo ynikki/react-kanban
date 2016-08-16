@@ -24,6 +24,13 @@ app.use(methodOverride(function(req, res){
   }
 }));
 
+app.use(function (req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+
+  res.setHeader('Cache-Control', 'no-cache');
+  next();
+});
+
 app.get('/', function (req, res) {
   db.Task.findAll()
     .then(function (tasks) {
@@ -39,13 +46,10 @@ app.get('/task/:id', function (req, res) {
   db.Task.findOne({
     where: {
       id: req.params.id
-    }, include: [{
-      model: db.Tasks,
-      required: true
-    }]
+    }
   })
-    .then(function (task) {
-      res.render('task', { task: task });
+    .then(function (tasks) {
+      res.render('task', { Task: tasks });
     });
 });
 
