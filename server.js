@@ -1,6 +1,5 @@
 const db = require('./models');
 
-const fs = require('fs');
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -12,7 +11,7 @@ app.set('port', (process.env.PORT || 8080));
 app.set('views', path.resolve(__dirname, 'views'));
 app.set('view engine', 'pug');
 
-app.use('/', express.static(path.join(__dirname, 'views/index')));
+app.use('/', express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extneded: false }));
 app.use(methodOverride(function(req, res){
@@ -33,7 +32,10 @@ app.use(function (req, res, next) {
 
 app.get('/', function (req, res) {
   db.Task.findAll()
-    .then(function (tasks) {
+    .then(function (tasks, err) {
+      if (err) {
+        done(err);
+      }
       return res.render('index', {Task: tasks});
     });
 });
@@ -48,9 +50,25 @@ app.get('/task/:id', function (req, res) {
       id: req.params.id
     }
   })
-    .then(function (tasks) {
-      res.render('task', { Task: tasks });
-    });
+  .then(function (tasks, err) {
+    if (err) {
+      done(err);
+    }
+    res.render('task', { Task: tasks });
+  });
+});
+
+app.post('/task', function (req, res) {
+  db.Task.create({
+    title: req.body.title,
+    description: req.body.description,
+    createdBy: req.body.createdBy,
+    assignedTo: req.body.assignedTo,
+    priority: req.body.priority
+  })
+  .then(function (tasks) {
+    res.render('task', {Task: tasks});
+  });
 });
 
 app.listen(app.get('port'), function () {
