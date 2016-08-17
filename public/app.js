@@ -35,7 +35,7 @@ const TaskForm = React.createClass({
     if ( !title || !description || !createdBy || !assignedTo || !priority ) {
       return;
     }
-    this.props.onCommentSubmit({
+    this.props.onTaskSubmit({
       title: title,
       description: description,
       createdBy: createdBy,
@@ -123,7 +123,7 @@ const TaskList = React.createClass({
       return (
         <Comment
           key={ index }
-          title={ task.title }
+          author={ task.createdBy }
         >
           { task.text }
         </Comment>
@@ -175,8 +175,8 @@ const TaskBox = React.createClass({
   render: function() {
     return (
       <div className="taskBox">
-        <TaskForm data={ this.state.data } />
-        <TaskList onTaskSubmit={ this.handleTaskSubmit }/>
+        <TaskList data={ this.state.data } />
+        <TaskForm onTaskSubmit={ this.handleTaskSubmit }/>
       </div>
     );
   }
