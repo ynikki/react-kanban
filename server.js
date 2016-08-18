@@ -34,10 +34,6 @@ app.get('/', function (req, res) {
   return res.render('index');
 });
 
-app.get('/tasks/new', function (req, res) {
-  res.render('task');
-});
-
 app.get('/tasks/:id', function (req, res) {
   db.Task.findOne({
     where: {
