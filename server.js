@@ -31,34 +31,35 @@ app.use(function (req, res, next) {
 });
 
 app.get('/', function (req, res) {
-  db.Task.findAll()
-    .then(function (tasks, err) {
-      if (err) {
-        done(err);
-      }
-      return res.render('index', {Task: tasks});
-    });
+  return res.render('index');
 });
 
-app.get('/task/new', function (req, res) {
+app.get('/tasks/new', function (req, res) {
   res.render('task');
 });
 
-app.get('/task/:id', function (req, res) {
+app.get('/tasks/:id', function (req, res) {
   db.Task.findOne({
     where: {
       id: req.params.id
     }
   })
-  .then(function (tasks, err) {
+  .then(function (task, err) {
     if (err) {
       done(err);
     }
-    res.render('task', { Task: tasks });
+    res.json(task);
   });
 });
 
-app.post('/task', function (req, res) {
+app.get('/tasks', function (req, res) {
+  db.Task.findAll()
+    .then(function (tasks) {
+      return res.json(tasks);
+    });
+});
+
+app.post('/tasks', function (req, res) {
   db.Task.create({
     title: req.body.title,
     description: req.body.description,
@@ -66,8 +67,8 @@ app.post('/task', function (req, res) {
     assignedTo: req.body.assignedTo,
     priority: req.body.priority
   })
-  .then(function (tasks) {
-    res.render('task', {Task: tasks});
+  .then(function (task) {
+    res.json(task);
   });
 });
 
