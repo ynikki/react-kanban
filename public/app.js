@@ -85,7 +85,7 @@ const TaskForm = React.createClass({
         <input
           type="text"
           placeholder="Priority"
-          value={ this.state.createdBy }
+          value={ this.state.priority }
           onChange={ this.handlePriorityChange }
         />
         <input
@@ -98,20 +98,21 @@ const TaskForm = React.createClass({
 });
 
 const Task = React.createClass({
-  rawMarkup: function () {
-    const md = new Remarkable();
-    const rawMarkup = md.render(this.props.children.toString());
-    return { __html: rawMarkup };
-  },
   render: function () {
     return (
       <div className="title">
         <h2 className="taskTitle">
           { this.props.title }
         </h2>
-        <span
-          dangerouslySetInnerHTML={ this.rawMarkup() }
-        />
+        <p className="description">
+          { this.props.description }
+        </p>
+        <h3 className="createdBy">
+          { this.props.createdBy }
+        </h3>
+        <span className="assignedTo">
+          { this.props.assignedTo }
+        </span>
       </div>
     );
   }
@@ -121,12 +122,15 @@ const TaskList = React.createClass({
   render: function () {
     const taskNodes = this.props.data.map(function (task, index) {
       return (
-        <Comment
+        <Task
           key={ index }
-          author={ task.createdBy }
+          title={ task.title }
+          description={ task.description }
+          createdBy={ task.createdBy }
+          assignedTo={ task.assignedTo }
         >
-          { task.text }
-        </Comment>
+         { task.text }
+        </Task>
       );
     });
     return (
@@ -170,7 +174,6 @@ const TaskBox = React.createClass({
   },
   componentDidMount: function () {
     this.loadTasksFromServer();
-    setInterval(this.loadTasksFromServer, this.props.pollInterval);
   },
   render: function() {
     return (
@@ -183,6 +186,6 @@ const TaskBox = React.createClass({
 });
 
 ReactDOM.render(
-  <TaskBox url="/task/new" pollInterval={2000} />,
+  <TaskBox url="/tasks" />,
   document.getElementById('app')
 );
