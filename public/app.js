@@ -53,35 +53,45 @@ const TaskForm = React.createClass({
   render: function () {
     return (
       <form className="taskForm" onSubmit= { this.handleSubmit }>
-        Title: 
+        <label>
+          Title:
+        </label>
         <input
           type="text"
           placeholder="Title"
           value={ this.state.title }
           onChange={ this.handleTitleChange }
         />
-        Description: 
+        <label>
+          Description:
+        </label> 
         <input
           type="text"
           placeholder="Description"
           value={ this.state.description }
           onChange={ this.handleDescriptionChange }
         />
-        Created By: 
+        <label>
+          Created By:
+        </label>
         <input
           type="text"
           placeholder="Created By"
           value={ this.state.createdBy }
           onChange={ this.handleCreatedByChange }
         />
-        Assigned To: 
+        <label>
+          Assigned To: 
+        </label>
         <input
           type="text"
           placeholder="Assigned To"
           value={ this.state.assignedTo }
           onChange={ this.handleAssignedToChange }
         />
-        Priority
+        <label>
+          Priority
+        </label>
         <input
           type="text"
           placeholder="Priority"
@@ -101,6 +111,9 @@ const Task = React.createClass({
   render: function () {
     return (
       <div className="title">
+        <span className="priority">
+          { this.props.priority }
+        </span>
         <h2 className="taskTitle">
           { this.props.title }
         </h2>
@@ -128,6 +141,7 @@ const TaskList = React.createClass({
           description={ task.description }
           createdBy={ task.createdBy }
           assignedTo={ task.assignedTo }
+          priority={ task.priority }
         >
          { task.text }
         </Task>
@@ -156,13 +170,15 @@ const TaskBox = React.createClass({
     });
   },
   handleTaskSubmit: function (task) {
+    const tasks = this.state.data;
     $.ajax({
       url: this.props.url,
       dataType: 'json',
       type: 'POST',
       data: task,
       success: function (data) {
-        this.setState({ data: data });
+        const allTasks = tasks.concat([data]);
+        this.setState({ data: allTasks });
       }.bind(this),
       error: function (xhr, status, err) {
         console.error(this.props.url, status, err.toString());
