@@ -5,7 +5,8 @@ const TaskForm = React.createClass({
       description: '',
       createdBy: '',
       assignedTo: '',
-      priority: ''
+      priority: '',
+      status:''
     };
   },
   handleTitleChange: function (e) {
@@ -23,6 +24,9 @@ const TaskForm = React.createClass({
   handlePriorityChange: function (e) {
     this.setState({ priority: e.target.value });
   },
+  handleStatusChange: function (e) {
+    this.setState({ status: e.target.value });
+  },
   handleSubmit: function (e) {
     e.preventDefault();
 
@@ -31,23 +35,26 @@ const TaskForm = React.createClass({
     let createdBy = this.state.createdBy.trim();
     let assignedTo = this.state.assignedTo.trim();
     let priority = this.state.priority.trim();
+    let status = this.state.status.trim();
 
-    if ( !title || !description || !createdBy || !assignedTo || !priority ) {
+    if ( !title || !description || !createdBy || !assignedTo || !priority || !status) {
       return;
     }
     this.props.onTaskSubmit({
       title: title,
       description: description,
-      createdBy: createdBy,
+      user_id: createdBy,
       assignedTo: assignedTo,
-      priority: priority
+      priority: priority,
+      status_id: status
     });
     this.setState({
       title: '',
       description: '',
       createdBy: '',
       assignedTo: '',
-      priority: ''
+      priority: '',
+      status: ''
     });
   },
   render: function () {
@@ -98,9 +105,19 @@ const TaskForm = React.createClass({
           value={ this.state.priority }
           onChange={ this.handlePriorityChange }
         />
+        <label>
+          Status
+        </label>
+        <input
+          type="text"
+          placeholder="Status"
+          value={ this.state.status }
+          onChange={ this.handleStatusChange }
+        />
         <input
           type="submit"
           value="Post"
+          className="submit"
         />
       </form>
     );
@@ -110,10 +127,13 @@ const TaskForm = React.createClass({
 const Task = React.createClass({
   render: function () {
     return (
-      <div className="title">
+      <div className="boxes">
         <span className="priority">
           { this.props.priority }
         </span>
+        <h3 className="statusTitle">
+          { this.props.status }
+        </h3>
         <h2 className="taskTitle">
           { this.props.title }
         </h2>
@@ -139,9 +159,10 @@ const TaskList = React.createClass({
           key={ index }
           title={ task.title }
           description={ task.description }
-          createdBy={ task.createdBy }
+          createdBy={ task.user_id }
           assignedTo={ task.assignedTo }
           priority={ task.priority }
+          status={ task.status_id }
         >
          { task.text }
         </Task>
@@ -187,6 +208,18 @@ const TaskBox = React.createClass({
   },
   getInitialState: function () {
     return { data: [] }
+  },
+  deleteTask: function (id) {
+    const ids = this;
+    $.ajax({
+      url: '/tasks/' + this.props.id + id,
+      type: 'DELETE',
+      success: function (result) {
+        const tasks = self.state.tasks;
+        tasks.splice(id, 1);
+        self.setState({ tasks: tasks });
+      }
+    });
   },
   componentDidMount: function () {
     this.loadTasksFromServer();
