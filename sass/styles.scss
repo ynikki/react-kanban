@@ -1,8 +1,15 @@
 @import "sass/reset";
 @import "sass/clearfix";
 
-@import 'https://fonts.googleapis.com/css?family=Magra';
-$magra: 'Magra', sans-serif;
+@import 'https://fonts.googleapis.com/css?family=Open+Sans|Permanent+Marker';
+$openSans: 'Open Sans', sans-serif;
+$permanent-marker: 'Permanent Marker', cursive;
+
+$independenceColor: #4D5061;
+$eaglegreen: #114B5F;
+$aeroBlue: #D6F6DD;
+$begoniaColor: #FF6978;
+$plantinumColor: #E9EDDE;
 
 @mixin small{
   @media #{$small} {
@@ -23,30 +30,80 @@ $magra: 'Magra', sans-serif;
 }
 
 body{
-  font-family: $magra;
+  font-family: $openSans;
+
+  .header{
+    background-color: $independenceColor;
+    font-family: $permanent-marker;
+    color: #c0c0c0;
+    font-size: 3rem;
+    padding: .5em;
+  }
 }
 
 .page-wrap{
   display: block;
   width: 50%;
-  align-content: space-between;
-  margin: 30%;
+  align-content: center;
+  margin: 25%;
 }
 
 .contain{
   display: flex;
   flex-flow: row wrap;
-  justify-content: space-between;
+  justify-content: center;
 }
 
-.taskBox{
+.taskForm{
   display: block;
+  float: right;
+  font-weight: bold;
+  color: #797979;
+  width: 40%;
+  margin-left: 10%;
 
-  input{
+  .submitPost{
+    background-color: $independenceColor;
+    color: #c0c0c0;
+    outline: none;
+    height: 2em;
+    border: none;
+    font-size: 1em;
+    letter-spacing: .1em;
+
+  }
+  .submitPost:hover{
+    background-color: #c0c0c0;
+    color: $independenceColor;
+  }
+  input, textarea{
     width: 100%;
     margin-top: .5em;
     margin-bottom: .5em;
-    height: 1.5em;
     outline: none;
+    padding: .2em;
+    font-size: .8em;
   }
+}
+
+.taskList{
+  float: left;
+}
+
+.boxes{
+  display: flex;
+  align-content: center;
+  width: 10em;
+  background-color: $begoniaColor;
+  border-radius: .2em;
+
+}
+.taskTitle{
+  font-size: 1em;
+  font-weight: bold;
+}
+
+.footer{
+  background-color: #4D5061;
+  height: 3.5em;
 }

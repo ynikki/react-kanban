@@ -2,7 +2,7 @@
    v2.0 | 20110126
    License: none (public domain)
 */
-@import 'https://fonts.googleapis.com/css?family=Magra';
+@import 'https://fonts.googleapis.com/css?family=Open+Sans|Permanent+Marker';
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -66,24 +66,65 @@ table {
 
 /* close commented backslash hack */
 body {
-  font-family: "Magra", sans-serif; }
+  font-family: "Open Sans", sans-serif; }
+  body .header {
+    background-color: #4D5061;
+    font-family: "Permanent Marker", cursive;
+    color: #c0c0c0;
+    font-size: 3rem;
+    padding: .5em; }
 
 .page-wrap {
   display: block;
   width: 50%;
-  align-content: space-between;
-  margin: 30%; }
+  align-content: center;
+  margin: 25%; }
 
 .contain {
   display: flex;
   flex-flow: row wrap;
-  justify-content: space-between; }
+  justify-content: center; }
 
-.taskBox {
-  display: block; }
-  .taskBox input {
+.taskForm {
+  display: block;
+  float: right;
+  font-weight: bold;
+  color: #797979;
+  width: 40%;
+  margin-left: 10%; }
+  .taskForm .submitPost {
+    background-color: #4D5061;
+    color: #c0c0c0;
+    outline: none;
+    height: 2em;
+    border: none;
+    font-size: 1em;
+    letter-spacing: .1em; }
+  .taskForm .submitPost:hover {
+    background-color: #c0c0c0;
+    color: #4D5061; }
+  .taskForm input, .taskForm textarea {
     width: 100%;
     margin-top: .5em;
     margin-bottom: .5em;
-    height: 1.5em;
-    outline: none; }
+    outline: none;
+    padding: .2em;
+    font-size: .8em; }
+
+.taskList {
+  float: left; }
+
+.boxes {
+  display: flex;
+  align-content: center;
+  width: 10em;
+  background-color: #FF6978;
+  border-radius: .2em; }
+
+.taskTitle {
+  font-size: 1em;
+  font-weight: bold; }
+
+.footer {
+  background-color: #4D5061;
+  height: 3.5em; }
