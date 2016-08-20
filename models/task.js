@@ -3,7 +3,6 @@ module.exports = function(sequelize, DataTypes) {
   var Task = sequelize.define('Task', {
     title: DataTypes.TEXT,
     description: DataTypes.TEXT,
-    createdBy: DataTypes.STRING,
     assignedTo: DataTypes.STRING,
     priority: DataTypes.INTEGER
   }, {
@@ -11,6 +10,9 @@ module.exports = function(sequelize, DataTypes) {
       associate: function(models) {
         models.Task.belongsTo(models.Status, {
           foreignKey: 'status_id'
+        });
+        models.Task.belongsTo(models.User, {
+          foreignKey: 'user_id'
         });
       }
     }
