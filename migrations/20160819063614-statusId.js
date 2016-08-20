@@ -8,7 +8,7 @@ module.exports = {
         allowNull: true,
         foreignKey: true,
         references: {
-          model: 'Tasks',
+          model: 'Statuses',
           key: 'id'
         }
     });
