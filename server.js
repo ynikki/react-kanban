@@ -59,14 +59,31 @@ app.post('/tasks', function (req, res) {
   db.Task.create({
     title: req.body.title,
     description: req.body.description,
-    createdBy: req.body.createdBy,
+    user_id: req.body.user_id,
     assignedTo: req.body.assignedTo,
-    priority: req.body.priority
+    priority: req.body.priority,
+    status_id: req.body.status_id
   })
   .then(function (task) {
     res.json(task);
   });
 });
+
+app.delete('/tasks/:id', function (req, res) {
+  db.Task.findOne({
+    where: {
+      id: req.params.id
+    }
+  })
+  .destroy({
+    where: {
+      id: req.params.id
+    }
+  })
+  .then(function (task) {
+    res.json(task);
+  });
+})
 
 app.listen(app.get('port'), function () {
   db.sequelize.sync();
