@@ -4,22 +4,17 @@ module.exports = {
   up: function (queryInterface, Sequelize) {
     return queryInterface.bulkInsert('Statuses', [
     {
-      "name": "URGENT",
+      "name": "Queue",
       createdAt: new Date(),
       updatedAt: new Date()
     },
     {
-      "name": "LOW",
+      "name": "Progress",
       createdAt: new Date(),
       updatedAt: new Date()
     },
     {
-      "name": "MEDIUM",
-      createdAt: new Date(),
-      updatedAt: new Date()
-    },
-    {
-      "name": "BLOCKER",
+      "name": "Done",
       createdAt: new Date(),
       updatedAt: new Date()
     }],{
