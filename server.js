@@ -34,6 +34,14 @@ app.get('/', function (req, res) {
   return res.render('index');
 });
 
+app.get('/tasks/statuses', function (req, res) {
+  db.Status.findAll()
+    .then(function (status) {
+      console.log(status);
+      return res.json(status);
+  });
+});
+
 app.get('/tasks/:id', function (req, res) {
   db.Task.findOne({
     where: {
@@ -55,12 +63,6 @@ app.get('/tasks', function (req, res) {
     });
 });
 
-app.get('/tasks/statuses', function (req, res) {
-  db.Status.findAll()
-    .then(function (status) {
-      return res.json(status);
-  });
-});
 
 app.post('/tasks', function (req, res) {
   db.Task.create({
@@ -86,7 +88,7 @@ app.delete('/tasks/:id', function (req, res) {
     return task.destroy();
   })
   .then(function (task) {
-    return db.Task.findAll()
+    return db.Task.findAll();
   })
   .then(function (tasks) {
     res.json(tasks);
