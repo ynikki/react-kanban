@@ -62,62 +62,65 @@ const TaskForm = React.createClass({
       <form className="taskForm" onSubmit= { this.handleSubmit }>
         <label>
           Title:
+          <input
+            type="text"
+            placeholder="Title"
+            value={ this.state.title }
+            onChange={ this.handleTitleChange }
+          />
         </label>
-        <input
-          type="text"
-          placeholder="Title"
-          value={ this.state.title }
-          onChange={ this.handleTitleChange }
-        />
         <label>
           Description:
+          <textarea
+            type="text"
+            placeholder="Description"
+            value={ this.state.description }
+            onChange={ this.handleDescriptionChange }
+          />
         </label> 
-        <input
-          type="text"
-          placeholder="Description"
-          value={ this.state.description }
-          onChange={ this.handleDescriptionChange }
-        />
         <label>
           Created By:
+          <input
+            type="text"
+            placeholder="Created By"
+            value={ this.state.createdBy }
+            onChange={ this.handleCreatedByChange }
+          />
         </label>
-        <input
-          type="text"
-          placeholder="Created By"
-          value={ this.state.createdBy }
-          onChange={ this.handleCreatedByChange }
-        />
         <label>
           Assigned To: 
+          <input
+            type="text"
+            placeholder="Assigned To"
+            value={ this.state.assignedTo }
+            onChange={ this.handleAssignedToChange }
+          />
         </label>
-        <input
-          type="text"
-          placeholder="Assigned To"
-          value={ this.state.assignedTo }
-          onChange={ this.handleAssignedToChange }
-        />
         <label>
           Priority
+          <input
+            type="text"
+            placeholder="Priority"
+            value={ this.state.priority }
+            onChange={ this.handlePriorityChange }
+          />
         </label>
-        <input
-          type="text"
-          placeholder="Priority"
-          value={ this.state.priority }
-          onChange={ this.handlePriorityChange }
-        />
         <label>
           Status
+          <br />
+          <select
+            value={ this.state.status }
+            onChange={ this.handleStatusChange }
+          >
+          <option>Option1</option>
+          <option>Option2</option>
+          <option>Option3</option>
+          </select>
         </label>
-        <input
-          type="text"
-          placeholder="Status"
-          value={ this.state.status }
-          onChange={ this.handleStatusChange }
-        />
         <input
           type="submit"
           value="Post"
-          className="submit"
+          className="submitPost"
         />
       </form>
     );
@@ -146,6 +149,15 @@ const Task = React.createClass({
         <span className="assignedTo">
           { this.props.assignedTo }
         </span>
+        <button
+          type="button"
+          className="deleteButton"
+          onClick={ (e) => {
+            this.props.delete(this.props.id); 
+          }}
+        >
+        Delete
+        </button>
       </div>
     );
   }
@@ -153,16 +165,18 @@ const Task = React.createClass({
 
 const TaskList = React.createClass({
   render: function () {
-    const taskNodes = this.props.data.map(function (task, index) {
+    const taskNodes = this.props.data.map( (task, index)=> {
       return (
         <Task
-          key={ index }
+          key={ task.id }
+          id={ task.id }
           title={ task.title }
           description={ task.description }
           createdBy={ task.user_id }
           assignedTo={ task.assignedTo }
           priority={ task.priority }
           status={ task.status_id }
+          delete={ this.props.onTaskDelete }
         >
          { task.text }
         </Task>
@@ -190,6 +204,20 @@ const TaskBox = React.createClass({
       }.bind(this)
     });
   },
+  loadStatusFromServer: function () {
+    console.log(this);
+    $.ajax({
+      url: this.props.url,
+      dataType: 'json',
+      cache: false,
+      succes: function (status) {
+        this.setState({ status_id: status });
+      }.bind(this),
+      error: function (xhr, status, err) {
+        console.error(this.props.url, status, err.toString());
+      }.bind(this)
+    });
+  },
   handleTaskSubmit: function (task) {
     const tasks = this.state.data;
     $.ajax({
@@ -207,27 +235,35 @@ const TaskBox = React.createClass({
     });
   },
   getInitialState: function () {
-    return { data: [] }
+    return { 
+      data: [],
+      status_id: []
+    }
   },
   deleteTask: function (id) {
-    const ids = this;
+    // const self = this;
     $.ajax({
-      url: '/tasks/' + this.props.id + id,
+      url: '/tasks/' + id,
       type: 'DELETE',
-      success: function (result) {
-        const tasks = self.state.tasks;
-        tasks.splice(id, 1);
-        self.setState({ tasks: tasks });
+      success: (result) => {
+        // arrow function allows you to access the parent function.
+        console.log(result);
+        this.setState({ data: result });
       }
     });
   },
   componentDidMount: function () {
     this.loadTasksFromServer();
+    this.loadStatusFromServer();
   },
   render: function() {
+    console.log(this.state.status_id);
     return (
       <div className="taskBox">
-        <TaskList data={ this.state.data } />
+        <TaskList data={ this.state.data } 
+          onTaskDelete={ this.deleteTask }
+          statuses={ this.state.status_id }
+        />
         <TaskForm onTaskSubmit={ this.handleTaskSubmit }/>
       </div>
     );
