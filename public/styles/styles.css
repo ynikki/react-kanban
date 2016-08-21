@@ -115,9 +115,9 @@ body {
   float: left; }
 
 .boxes {
-  display: flex;
+  display: block;
   align-content: center;
-  width: 10em;
+  width: 100%;
   background-color: #FF6978;
   border-radius: .2em; }
 

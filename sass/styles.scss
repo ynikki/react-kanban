@@ -91,9 +91,9 @@ body{
 }
 
 .boxes{
-  display: flex;
+  display: block;
   align-content: center;
-  width: 10em;
+  width: 100%;
   background-color: $begoniaColor;
   border-radius: .2em;
 
