@@ -55,6 +55,13 @@ app.get('/tasks', function (req, res) {
     });
 });
 
+app.get('/tasks/statuses', function (req, res) {
+  db.Status.findAll()
+    .then(function (status) {
+      return res.json(status);
+  });
+});
+
 app.post('/tasks', function (req, res) {
   db.Task.create({
     title: req.body.title,
@@ -75,15 +82,16 @@ app.delete('/tasks/:id', function (req, res) {
       id: req.params.id
     }
   })
-  .destroy({
-    where: {
-      id: req.params.id
-    }
+  .then(function (task) {
+    return task.destroy();
   })
   .then(function (task) {
-    res.json(task);
+    return db.Task.findAll()
+  })
+  .then(function (tasks) {
+    res.json(tasks);
   });
-})
+});
 
 app.listen(app.get('port'), function () {
   db.sequelize.sync();
