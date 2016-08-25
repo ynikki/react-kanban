@@ -152,9 +152,9 @@ const Task = React.createClass({
   render: function () {
     return (
       <div className="boxes">
-        <h3 className="statusTitle">
+        <h2 className="statusTitle">
           { this.props.status_id }
-        </h3>
+        </h2>
         <button
           type="button"
           className="deleteButton"
@@ -165,6 +165,7 @@ const Task = React.createClass({
         x
         </button>
         <span className="priority">
+          <h1>PRIORITY:</h1> 
           { this.props.priority }
         </span>
         <h2 className="taskTitle">
@@ -173,12 +174,38 @@ const Task = React.createClass({
         <p className="description">
           { this.props.description }
         </p>
-        <h3 className="createdBy">
+        <span className="createdBy">
+          <h1>CREATED BY:</h1>
           { this.props.createdBy }
-        </h3>
+        </span>
         <span className="assignedTo">
+          <h1>ASSIGNED TO:</h1>
           { this.props.assignedTo }
         </span>
+         <button
+          type="button"
+          className="editButton"
+          onClick={ (e) => {
+            this.props.edit(
+              this.props.id,
+              this.props.statusId - 1
+            ); 
+          }}
+        >
+        LEFT
+        </button>
+        <button
+          type="button"
+          className="editButton"
+          onClick={ (e) => {
+            this.props.edit(
+              this.props.id,
+              this.props.statusId +1
+            ); 
+          }}
+        >
+        RIGHT
+        </button>
       </div>
     );
   }
@@ -192,13 +219,14 @@ const TaskListQueue = React.createClass({
           <Task
             key={ task.id }
             id={ task.id }
-            status={ task.status_id }
+            statusId={ task.status_id }
             title={ task.title }
             description={ task.description }
             createdBy={ task.user_id }
             assignedTo={ task.assignedTo }
             priority={ task.priority }
             delete={ this.props.onTaskDelete }
+            edit={ this.props.onTaskChange }
           >
            { task.text }
           </Task>
@@ -217,18 +245,18 @@ const TaskListProgress = React.createClass({
   render: function () {
     const taskNodes = this.props.data.map( (task, index)=> {
       if(task.status_id === 2){
-        console.log(task, "hello");
         return (
           <Task
             key={ task.id }
             id={ task.id }
-            status={ task.status_id }
+            statusId={ task.status_id }
             title={ task.title }
             description={ task.description }
             createdBy={ task.user_id }
             assignedTo={ task.assignedTo }
             priority={ task.priority }
             delete={ this.props.onTaskDelete }
+            edit={ this.props.onTaskChange }
           >
            { task.text }
           </Task>
@@ -251,13 +279,14 @@ const TaskListDone = React.createClass({
           <Task
             key={ task.id }
             id={ task.id }
-            status={ task.status_id }
+            statusId={ task.status_id }
             title={ task.title }
             description={ task.description }
             createdBy={ task.user_id }
             assignedTo={ task.assignedTo }
             priority={ task.priority }
             delete={ this.props.onTaskDelete }
+            edit={ this.props.onTaskChange }
           >
            { task.text }
           </Task>
@@ -332,6 +361,17 @@ const TaskBox = React.createClass({
       }
     });
   },
+  changeTask: function (id, nextStatusId) {
+    $.ajax({
+      url: '/tasks/' + id,
+      dataType: 'json',
+      type: 'PUT',
+      data: { statusId: nextStatusId },
+      succes: (result) => {
+        this.setState({ data: result });
+      }
+    });
+  },
   componentDidMount: function () {
     this.loadTasksFromServer();
     this.loadStatusFromServer();
@@ -339,23 +379,36 @@ const TaskBox = React.createClass({
   render: function() {
     return (
       <div className="taskBox">
-        <div className="queueStatus">
-          <h3>QUEUE</h3>
-          <TaskListQueue data={ this.state.data } 
-            onTaskDelete={ this.deleteTask }
-          />
-        </div>
-        <div className="progressStatus">
-          <h3>PROGRESS</h3>
-          <TaskListProgress data={ this.state.data } 
-            onTaskDelete={ this.deleteTask }
-          />
-        </div>
-        <div className="doneStatus">
-          <h3>DONE</h3>
-          <TaskListDone data={ this.state.data } 
-            onTaskDelete={ this.deleteTask }
-          />
+        <div className="statusBoxes">
+          <div className="queueStatus">
+            <div className="que">
+              <h3>QUEUE</h3>
+            </div>
+            <TaskListQueue data={ this.state.data } 
+              onTaskDelete={ this.deleteTask }
+              onTaskChange={ this.changeTask }
+
+            />
+          </div>
+          <div className="progressStatus">
+            <div className="progress">
+              <h3>PROGRESS</h3>
+            </div>
+            <TaskListProgress data={ this.state.data } 
+              onTaskDelete={ this.deleteTask }
+              onTaskChange={ this.changeTask }
+
+            />
+          </div>
+          <div className="doneStatus">
+            <div className="done">
+              <h3>DONE</h3>
+            </div>
+            <TaskListDone data={ this.state.data } 
+              onTaskDelete={ this.deleteTask }
+              onTaskChange={ this.changeTask }
+            />
+          </div>
         </div>
         <TaskForm onTaskSubmit={ this.handleTaskSubmit }
           statusTypes={ this.state.status }
