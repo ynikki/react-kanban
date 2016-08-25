@@ -37,7 +37,6 @@ app.get('/', function (req, res) {
 app.get('/tasks/statuses', function (req, res) {
   db.Status.findAll()
     .then(function (status) {
-      console.log(status);
       return res.json(status);
   });
 });
@@ -72,6 +71,22 @@ app.post('/tasks', function (req, res) {
     assignedTo: req.body.assignedTo,
     priority: req.body.priority,
     status_id: req.body.status_id
+  })
+  .then(function (task) {
+    res.json(task);
+  });
+});
+
+app.put('/tasks/:id', function (req, res) {
+  db.Task.findOne({
+    where: {
+      id: req.params.id
+    }
+  })
+  .then(function (edit) {
+    return edit.update({
+      status_id: req.body.statusId
+    });
   })
   .then(function (task) {
     res.json(task);
