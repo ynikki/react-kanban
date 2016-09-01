@@ -67,8 +67,7 @@ table {
 /* close commented backslash hack */
 body {
   font-family: "Open Sans", sans-serif;
-  margin: 0;
-  padding: 0; }
+  min-height: 100vh; }
 
 .header {
   width: 100%;
@@ -83,22 +82,34 @@ body {
   -moz-box-shadow: 0 0 5px 6px rgba(240, 240, 240, 0.5);
   -webkit-box-shadow: 0 0 5px 6px rgba(240, 240, 240, 0.5);
   box-shadow: 0 0 5px 6px rgba(240, 240, 240, 0.5); }
+  .header.scrollNav {
+    opacity: 0.92;
+    transition: all 0.5s ease; }
 
 .page-wrap {
   display: block;
-  width: 60%;
-  align-content: center;
-  margin: 25%; }
+  align-content: space-between;
+  width: 80%;
+  margin: 10%; }
 
 .contain {
+  padding-top: 3em;
   display: flex;
-  flex-flow: row wrap;
+  flex: row wrap;
   justify-content: space-between; }
 
+.statusBox {
+  display: flex;
+  flex-wrap: row nowrap; }
+
+.taskBox {
+  display: flex;
+  justify-content: space-between;
+  width: 100%; }
+
 .taskFormBox {
-  display: block;
-  float: right;
-  width: 30%;
+  width: 25%;
+  height: 50%;
   padding: .9em;
   -moz-box-shadow: 3px 3px 5px 6px #ccc;
   -webkit-box-shadow: 3px 3px 5px 6px #ccc;
@@ -146,28 +157,55 @@ body {
   .taskForm textarea {
     resize: none; }
 
-.deleteButton {
-  background-image: -webkit-linear-gradient(top, #f4f1ee, #fff);
-  background-image: linear-gradient(top, #f4f1ee, #fff);
-  border-radius: 50%;
-  box-shadow: 0px 8px 10px 0px rgba(0, 0, 0, 0.3), inset 0px 4px 1px 1px white, inset 0px -3px 1px 1px rgba(204, 198, 197, 0.5);
-  float: right;
-  height: 20px;
-  margin: 0 10px 10px 0;
-  width: 20px;
+.deleteButton, .leftButton, .rightButton {
   -webkit-transition: all .1s linear;
-  transition: all .1s linear; }
+  transition: all .1s linear;
+  border: none;
+  background-color: #fff;
+  color: #4D5061;
+  text-align: center; }
 
-.taskList {
-  float: left; }
+h3 {
+  font-weight: bold;
+  font-size: 1.3rem;
+  letter-spacing: 0.4rem;
+  margin-bottom: .5em; }
+
+.queueStatus, .progressStatus, .doneStatus {
+  padding: .4em;
+  width: 12em;
+  -moz-box-shadow: 3px 3px 5px 6px #ccc;
+  -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+  box-shadow: 3px 3px 5px 6px #ccc;
+  border-radius: 4px;
+  margin-bottom: 2em; }
+  .queueStatus h3, .progressStatus h3, .doneStatus h3 {
+    color: #4D5061;
+    text-align: center;
+    font-weight: bold; }
+
+.hide {
+  display: none; }
+
+.queueStatus .leftButton {
+  display: none; }
+
+.doneStatus .rightButton {
+  display: none; }
 
 .boxes {
-  display: block;
-  align-content: center;
-  width: 100%;
-  height: 8em;
-  background-color: #FF6978;
-  border-radius: .2em; }
+  line-height: 1.3rem; }
+  .boxes h2 {
+    text-align: center;
+    font-size: .98rem;
+    color: #797979; }
+
+.buttons {
+  border-box: box-sizing;
+  text-align: center; }
+
+.statusTitle {
+  visibility: hidden; }
 
 .priorityOptions, .statusChoices {
   margin-top: 0.5em;
