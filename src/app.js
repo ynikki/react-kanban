@@ -6,7 +6,8 @@ const TaskForm = React.createClass({
       createdBy: '',
       assignedTo: '',
       priority: '',
-      status:''
+      status:'',
+      isHidden: true
     };
   },
   handleTitleChange: function (e) {
@@ -27,6 +28,9 @@ const TaskForm = React.createClass({
   handleStatusChange: function (e) {
     this.setState({ status: e.target.value });
   },
+  toggleHidden: function (e) {
+    this.setState({ isHidden: this.state.isHidden ? false : true });
+  },
   handleSubmit: function (e) {
     e.preventDefault();
 
@@ -43,8 +47,8 @@ const TaskForm = React.createClass({
     this.props.onTaskSubmit({
       title: title,
       description: description,
-      user_id: createdBy,
-      assignedTo: assignedTo,
+      createdBy: createdBy,
+      user_id: assignedTo,
       priority: priority,
       status_id: status
     });
@@ -54,7 +58,8 @@ const TaskForm = React.createClass({
       createdBy: '',
       assignedTo: '',
       priority: '',
-      status: ''
+      status: '',
+      isHidden: true
     });
   },
   render: function () {
@@ -106,6 +111,7 @@ const TaskForm = React.createClass({
             <input
               type="text"
               placeholder="Assigned To"
+              className="assignedTo"
               value={ this.state.assignedTo }
               onChange={ this.handleAssignedToChange }
             />
@@ -149,63 +155,81 @@ const TaskForm = React.createClass({
 });
 
 const Task = React.createClass({
+  getInitialState: function () {
+    return {
+      visible: true
+    }
+  },
+  toggleHidden: function () {
+    const currentState = this.state.visible;
+    this.setState({ visible: !currentState });
+  },
   render: function () {
     return (
-      <div className="boxes">
+      <div className="boxes"
+        onClick={ this.toggleHidden }
+      >
         <h2 className="statusTitle">
           { this.props.status_id }
         </h2>
-        <button
-          type="button"
-          className="deleteButton"
-          onClick={ (e) => {
-            this.props.delete(this.props.id); 
-          }}
-        >
-        x
-        </button>
-        <span className="priority">
-          <h1>PRIORITY:</h1> 
-          { this.props.priority }
-        </span>
         <h2 className="taskTitle">
           { this.props.title }
         </h2>
-        <p className="description">
-          { this.props.description }
-        </p>
-        <span className="createdBy">
-          <h1>CREATED BY:</h1>
-          { this.props.createdBy }
-        </span>
-        <span className="assignedTo">
-          <h1>ASSIGNED TO:</h1>
-          { this.props.assignedTo }
-        </span>
-         <button
-          type="button"
-          className="editButton"
-          onClick={ (e) => {
-            this.props.edit(
-              this.props.id,
-              this.props.statusId - 1
-            ); 
-          }}
+        { this.state.visible }
+        <div 
+          className={ this.state.visible ? "" : "hide" }
         >
-        LEFT
-        </button>
-        <button
-          type="button"
-          className="editButton"
-          onClick={ (e) => {
-            this.props.edit(
-              this.props.id,
-              this.props.statusId +1
-            ); 
-          }}
-        >
-        RIGHT
-        </button>
+          <p className="description">
+            { this.props.description }
+          </p>
+          <span className="priority">
+            <h1>PRIORITY:</h1> 
+            { this.props.priority }
+          </span>
+          <span className="createdBy">
+            <h1>CREATED BY:</h1>
+            { this.props.createdBy }
+          </span>
+          <span className="assignedTo">
+            <h1>ASSIGNED TO:</h1>
+            { this.props.assignedTo }
+          </span>
+        </div>
+        <div className="buttons">
+          <button
+            type="button"
+            className="leftButton"
+            onClick={ (e) => {
+              this.props.edit(
+                this.props.id,
+                this.props.statusId - 1
+              ); 
+            }}
+          >
+          &#10094;
+          </button>
+          <button
+            type="button"
+            className="deleteButton"
+            onClick={ (e) => {
+              this.props.delete(this.props.id); 
+            }}
+          >
+          &#10006;
+          </button>
+          <button
+            type="button"
+            className="rightButton"
+            onClick={ (e) => {
+              this.props.edit(
+                this.props.id,
+                this.props.statusId +1
+              ); 
+            }}
+          >
+          &#10095;
+          </button>
+        </div>
       </div>
     );
   }
@@ -222,8 +246,8 @@ const TaskListQueue = React.createClass({
             statusId={ task.status_id }
             title={ task.title }
             description={ task.description }
-            createdBy={ task.user_id }
-            assignedTo={ task.assignedTo }
+            createdBy={ task.createdBy }
+            assignedTo={ task.user_id }
             priority={ task.priority }
             delete={ this.props.onTaskDelete }
             edit={ this.props.onTaskChange }
@@ -252,8 +276,8 @@ const TaskListProgress = React.createClass({
             statusId={ task.status_id }
             title={ task.title }
             description={ task.description }
-            createdBy={ task.user_id }
-            assignedTo={ task.assignedTo }
+            createdBy={ task.createdBy }
+            assignedTo={ task.user_id }
             priority={ task.priority }
             delete={ this.props.onTaskDelete }
             edit={ this.props.onTaskChange }
@@ -282,8 +306,8 @@ const TaskListDone = React.createClass({
             statusId={ task.status_id }
             title={ task.title }
             description={ task.description }
-            createdBy={ task.user_id }
-            assignedTo={ task.assignedTo }
+            createdBy={ task.createdBy }
+            assignedTo={ task.user_id }
             priority={ task.priority }
             delete={ this.props.onTaskDelete }
             edit={ this.props.onTaskChange }
@@ -305,7 +329,8 @@ const TaskBox = React.createClass({
   getInitialState: function () {
     return { 
       data: [],
-      status: []
+      status: [],
+      childVisible: true
     }
   },
   loadTasksFromServer: function () {
@@ -367,10 +392,13 @@ const TaskBox = React.createClass({
       dataType: 'json',
       type: 'PUT',
       data: { statusId: nextStatusId },
-      succes: (result) => {
+      success: (result) => {
         this.setState({ data: result });
       }
     });
+  },
+  onClick: function () {
+    this.setState({ childVisible: !this.state.childVisible });
   },
   componentDidMount: function () {
     this.loadTasksFromServer();
@@ -384,7 +412,8 @@ const TaskBox = React.createClass({
             <div className="que">
               <h3>QUEUE</h3>
             </div>
-            <TaskListQueue data={ this.state.data } 
+            <TaskListQueue 
+              data={ this.state.data } 
               onTaskDelete={ this.deleteTask }
               onTaskChange={ this.changeTask }
 
@@ -394,7 +423,8 @@ const TaskBox = React.createClass({
             <div className="progress">
               <h3>PROGRESS</h3>
             </div>
-            <TaskListProgress data={ this.state.data } 
+            <TaskListProgress 
+              data={ this.state.data } 
               onTaskDelete={ this.deleteTask }
               onTaskChange={ this.changeTask }
 
@@ -404,13 +434,15 @@ const TaskBox = React.createClass({
             <div className="done">
               <h3>DONE</h3>
             </div>
-            <TaskListDone data={ this.state.data } 
+            <TaskListDone 
+              data={ this.state.data } 
               onTaskDelete={ this.deleteTask }
               onTaskChange={ this.changeTask }
             />
           </div>
         </div>
-        <TaskForm onTaskSubmit={ this.handleTaskSubmit }
+        <TaskForm 
+          onTaskSubmit={ this.handleTaskSubmit }
           statusTypes={ this.state.status }
         />
       </div>
