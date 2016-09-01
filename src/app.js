@@ -177,7 +177,7 @@ const Task = React.createClass({
         </h2>
         { this.state.visible }
         <div 
-          className={ this.state.visible ? "" : "hide" }
+          className={ this.state.visible ? "hide" : "" }
         >
           <p className="description">
             { this.props.description }
