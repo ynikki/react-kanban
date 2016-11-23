@@ -67,18 +67,22 @@ table {
 /* close commented backslash hack */
 body {
   font-family: "Open Sans", sans-serif;
-  min-height: 100vh; }
+  min-height: 100vh;
+  height: 100%;
+  min-width: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0; }
 
 .header {
   width: 100%;
   position: fixed;
   top: 0;
-  background-color: #4D5061;
+  background-color: #E54B4B;
   font-family: "Permanent Marker", cursive;
-  color: #c0c0c0;
+  color: #FFF;
   font-size: 3rem;
   padding: .5em;
-  z-index: 50000;
   -moz-box-shadow: 0 0 5px 6px rgba(240, 240, 240, 0.5);
   -webkit-box-shadow: 0 0 5px 6px rgba(240, 240, 240, 0.5);
   box-shadow: 0 0 5px 6px rgba(240, 240, 240, 0.5); }
@@ -89,27 +93,25 @@ body {
 .page-wrap {
   display: block;
   align-content: space-between;
-  width: 80%;
-  margin: 10%; }
+  margin: 10% auto; }
 
 .contain {
   padding-top: 3em;
   display: flex;
-  flex: row wrap;
-  justify-content: space-between; }
+  flex-flow: row wrap; }
 
 .statusBox {
-  display: flex;
-  flex-wrap: row nowrap; }
+  display: block;
+  justify-content: space-between;
+  box-sizing: border-box;
+  flex-flow: row wrap; }
 
 .taskBox {
-  display: flex;
-  justify-content: space-between;
-  width: 100%; }
+  display: block; }
 
 .taskFormBox {
-  width: 25%;
-  height: 50%;
+  width: 300px;
+  height: 480px;
   padding: .9em;
   -moz-box-shadow: 3px 3px 5px 6px #ccc;
   -webkit-box-shadow: 3px 3px 5px 6px #ccc;
@@ -130,21 +132,21 @@ body {
   font-weight: bold;
   color: #797979; }
   .taskForm .submitPost {
-    background-color: #4D5061;
-    color: #c0c0c0;
+    background-color: #E54B4B;
+    color: #FFF;
     outline: none;
     height: 2em;
     border: none;
-    box-shadow: 0 .2em #626780;
+    box-shadow: 0 0.2em #F76A6A;
     font-size: 1em;
     letter-spacing: .1em;
     justify-content: center;
     transition: 0.3s all ease;
     width: 100%; }
   .taskForm .submitPost:hover {
-    background-color: #c0c0c0;
-    color: #4D5061;
-    box-shadow: 0 .2em #a2a2a2; }
+    background-color: #F76A6A;
+    color: #FFF;
+    box-shadow: 0 0.2em #E54B4B; }
   .taskForm input, .taskForm textarea {
     width: 95%;
     margin-top: .5em;
@@ -173,7 +175,7 @@ h3 {
 
 .queueStatus, .progressStatus, .doneStatus {
   padding: .4em;
-  width: 12em;
+  width: 200px;
   -moz-box-shadow: 3px 3px 5px 6px #ccc;
   -webkit-box-shadow: 3px 3px 5px 6px #ccc;
   box-shadow: 3px 3px 5px 6px #ccc;
@@ -185,7 +187,9 @@ h3 {
     font-weight: bold; }
 
 .hide {
-  display: none; }
+  display: none;
+  -webkit-transition: all .3s linear;
+  transition: all .3s linear; }
 
 .queueStatus .leftButton {
   display: none; }
@@ -233,10 +237,10 @@ select {
   font-weight: bold; }
 
 .footer {
-  background-color: #4D5061;
-  height: 3.5em;
+  background-color: #E54B4B;
+  height: 6em;
   width: 100%; }
   .footer .copyFooter {
     text-align: center;
-    color: #c0c0c0;
-    padding-top: 1.4em; }
+    color: #FFF;
+    padding-top: 2em; }
