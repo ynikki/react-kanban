@@ -164,7 +164,7 @@ body {
   transition: all .1s linear;
   border: none;
   background-color: #fff;
-  color: #4D5061;
+  color: #726E75;
   text-align: center; }
   .deleteButton:hover, .leftButton:hover, .rightButton:hover {
     color: #E54B4B; }
@@ -187,9 +187,13 @@ h3 {
   box-sizing: border-box;
   margin: 30px; }
   .queueStatus h3, .progressStatus h3, .doneStatus h3 {
-    color: #4D5061;
+    color: #726E75;
     text-align: center;
     font-weight: bold; }
+  .queueStatus p, .progressStatus p, .doneStatus p {
+    color: #948B89;
+    font-size: .9rem;
+    text-align: center; }
 
 .hide {
   display: none;
@@ -247,5 +251,5 @@ select {
   width: 100%; }
   .footer .copyFooter {
     text-align: center;
-    color: #FFF;
+    color: #F7EBE8;
     padding-top: 2em; }

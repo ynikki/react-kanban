@@ -43,7 +43,7 @@ body{
   height: 80px;
   background-color: $carminePink;
   font-family: $permanent-marker;
-  color: #F7EBE8;
+  color: $linen;
   font-size: 3rem;
   padding: .5em;
   -moz-box-shadow:    0 0 5px 6px hsla(231, 0%, 94%, 0.5);
@@ -143,7 +143,7 @@ body{
   transition: all .1s linear;
   border: none;
   background-color: #fff;
-  color: $independenceColor;
+  color: $nickel;
   text-align: center;
   &:hover{
     color: $carminePink;
@@ -170,9 +170,14 @@ h3{
   margin: 30px;
 
   h3{
-    color: $independenceColor;
+    color: $nickel;
     text-align: center;
     font-weight: bold;
+  }
+  p{
+    color: $taupeGrey;
+    font-size: .9rem;
+    text-align: center;
   }
 }
 
@@ -257,7 +262,7 @@ select {
 
   .copyFooter{
     text-align: center;
-    color: #FFF;
+    color: $linen;
     padding-top: 2em;
   }
 }
