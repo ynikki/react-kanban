@@ -76,7 +76,6 @@ body {
 
 .header {
   width: 100%;
-  top: 0;
   background-color: #E54B4B;
   font-family: "Permanent Marker", cursive;
   color: #F7EBE8;
@@ -89,24 +88,14 @@ body {
     opacity: 0.92;
     transition: all 0.5s ease; }
 
-.page-wrap {
-  display: flex;
-  align-content: space-between;
-  justify-content: space-around;
-  margin: 10% auto; }
-
-.contain {
-  padding-top: 3em;
-  display: flex;
-  flex-flow: row wrap; }
-
 .taskBox {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-around;
   box-sizing: border-box;
   align-content: flex-start;
-  width: 100%; }
+  width: 100%;
+  margin: auto; }
 
 .statusBox {
   display: block; }
@@ -176,6 +165,8 @@ body {
   background-color: #fff;
   color: #4D5061;
   text-align: center; }
+  .deleteButton:hover, .leftButton:hover, .rightButton:hover {
+    color: #E54B4B; }
 
 h3 {
   font-weight: bold;

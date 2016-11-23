@@ -40,8 +40,6 @@ body{
 
 .header{
   width: 100%;
-  // position: fixed;
-  top: 0;
   background-color: $carminePink;
   font-family: $permanent-marker;
   color: #F7EBE8;
@@ -57,18 +55,6 @@ body{
   }
 }
 
-.page-wrap{
-  display: flex;
-  align-content: space-between;
-  justify-content: space-around;
-  margin: 10% auto;
-}
-
-.contain{
-  padding-top: 3em;
-  display: flex;
-  flex-flow: row wrap;
-}
 .taskBox{
   display: flex;
   flex-flow: row wrap;
@@ -76,13 +62,11 @@ body{
   box-sizing: border-box;
   align-content: flex-start;
   width: 100%;
+  margin: auto;
 }
 
 .statusBox{
   display: block;
-  // justify-content: space-between;
-  // box-sizing: border-box;
-  // flex-flow: row wrap;
 }
 .statusBoxes{
   align-items: flex-start;
@@ -160,6 +144,9 @@ body{
   background-color: #fff;
   color: $independenceColor;
   text-align: center;
+  &:hover{
+    color: $carminePink;
+  }
 }
 
 h3{
