@@ -4,16 +4,13 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-const pug = require('pug');
 const methodOverride = require('method-override');
 
 app.set('port', (process.env.PORT || 8080));
-app.set('views', path.resolve(__dirname, 'views'));
-app.set('view engine', 'pug');
 
 app.use('/', express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extneded: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride(function(req, res){
   if (req.body && typeof req.body === 'object' && '_method' in req.body) {
     // look in urlencoded POST bodies and delete it
@@ -31,7 +28,7 @@ app.use(function (req, res, next) {
 });
 
 app.get('/', function (req, res) {
-  return res.render('index');
+  return res.render('index.html');
 });
 
 app.get('/tasks/statuses', function (req, res) {
@@ -67,8 +64,8 @@ app.post('/tasks', function (req, res) {
   db.Task.create({
     title: req.body.title,
     description: req.body.description,
+    createdBy: req.body.createdBy,
     user_id: req.body.user_id,
-    assignedTo: req.body.assignedTo,
     priority: req.body.priority,
     status_id: req.body.status_id
   })
