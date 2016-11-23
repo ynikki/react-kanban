@@ -40,11 +40,11 @@ body{
 
 .header{
   width: 100%;
-  position: fixed;
+  // position: fixed;
   top: 0;
   background-color: $carminePink;
   font-family: $permanent-marker;
-  color: #FFF;
+  color: #F7EBE8;
   font-size: 3rem;
   padding: .5em;
   -moz-box-shadow:    0 0 5px 6px hsla(231, 0%, 94%, 0.5);
@@ -58,8 +58,9 @@ body{
 }
 
 .page-wrap{
-  display: block;
+  display: flex;
   align-content: space-between;
+  justify-content: space-around;
   margin: 10% auto;
 }
 
@@ -68,21 +69,33 @@ body{
   display: flex;
   flex-flow: row wrap;
 }
+.taskBox{
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  box-sizing: border-box;
+  align-content: flex-start;
+  width: 100%;
+}
 
 .statusBox{
   display: block;
-  justify-content: space-between;
-  box-sizing: border-box;
-  flex-flow: row wrap;
+  // justify-content: space-between;
+  // box-sizing: border-box;
+  // flex-flow: row wrap;
 }
-
-.taskBox{
-  display: block;
+.statusBoxes{
+  align-items: flex-start;
+  display: flex;
+  justify-content: space-around;
+  align-content: space-around;
 }
 
 .taskFormBox{
   width: 300px;
-  height: 480px;
+  height: 470px;
+  margin: 30px;
+  display: block;
   padding: .9em;
   -moz-box-shadow:    3px 3px 5px 6px #ccc;
   -webkit-box-shadow: 3px 3px 5px 6px #ccc;
@@ -164,6 +177,9 @@ h3{
   box-shadow:         3px 3px 5px 6px #ccc;
   border-radius: 4px;
   margin-bottom: 2em;
+  display: block;
+  box-sizing: border-box;
+  margin: 30px;
 
   h3{
     color: $independenceColor;
@@ -177,10 +193,6 @@ h3{
   -webkit-transition: all .3s linear;
   transition: all .3s linear;
 }
-
-// .hide:after{
-//   display: inline
-// }
 
 .queueStatus{
   .leftButton{
