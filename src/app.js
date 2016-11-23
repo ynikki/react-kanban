@@ -182,8 +182,8 @@ const Task = React.createClass({
           <p className="description">
             { this.props.description }
           </p>
+          <h1>PRIORITY:</h1> 
           <span className="priority">
-            <h1>PRIORITY:</h1> 
             { this.props.priority }
           </span>
           <span className="createdBy">
