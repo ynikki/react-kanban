@@ -6,9 +6,9 @@ module.exports = {
     {
       "title": "KANBAN",
       "description": "Finish this on time...",
-      "user_id": 1,
+      "createdBy": 1,
       "status_id": 2,
-      "assignedTo": "something",
+      "user_id": 1,
       "priority": "4",
       createdAt: new Date(),
       updatedAt: new Date()
@@ -16,9 +16,9 @@ module.exports = {
     {
       "title": "This is a Test",
       "description": "This is another test...",
+      "createdBy": 2,
+      "status_id": 1,
       "user_id": 2,
-      "status_id": 3,
-      "assignedTo": "noo",
       "priority": "2",
       createdAt: new Date(),
       updatedAt: new Date()
@@ -26,8 +26,9 @@ module.exports = {
     {
       "title": "Another One Bites The Dust",
       "description": "Puhleeeez work, pretty please.",
-      "user_id": 3,
-      "assignedTo": "youu",
+      "createdBy": 3,
+      "status_id": 3,
+      "user_id": 5,
       "priority": "5",
       createdAt: new Date(),
       updatedAt: new Date() 
